@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+       <link rel="stylesheet" href="style.css">
+       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+ <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+         crossorigin="anonymous"></script>
+ <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+         integrity="sha384-q5qzjMEWBfW6XKw8OI4RtFJx4BGF2A8zq0l7f8xIaf8QbBR8NShgDhpdL4xMs7yN"
+         crossorigin="anonymous"></script>
+ <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+         integrity="sha384-Jj17wnf/nfSLzquL1tdFof8XCvuTRgTpFjapTcxfejzmM2UDTnA2P9cfsQcz/dl"
+         crossorigin="anonymous"></script>
+
+ <!-- Include Bootstrap Table CSS and JS -->
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.2/bootstrap-table.min.css">
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.2/bootstrap-table.min.js"></script>
+    <title>list</title>
+
+    <style>
+
+      th{
+        color: white;
+      }
+      input[type=date]{
+        margin: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg py-3 sticky-top navbar-light bg-light bg-white">
+        <div class="container">
+          <a class="navbar-brand" href="#">
+            <!-- <img src="img/ahamed_s-logo2.jpg" alt=""> -->
+            Ahamed's Apple
+        </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#home">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#services">Menus</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Upload</a>
+              </li>
+             
+            </ul>
+            <button class="btn btn-primary ms-lg-3">Log out</button>
+          </div>
+        </div>
+      </nav>
+
+
+      <div class="container mt-5">
+
+        <div class="col-4" style="height: 40px; ;background-color: green;margin: 2px;color: white; padding: 4px;">
+          
+            <label>Date  :</label>
+            <input type="date" name="" id="">
+         
+          
+        </div>
+        
+            <div class="btn-group">
+            <button type="button" class="btn btn-primary" onclick="showFirstTable()">Appointment Patients</button>
+            <button type="button" class="btn btn-secondary" onclick="showSecondTable()">Queried Patients</button>
+            <button type="button" class="btn btn-primary" onclick="showThirdTable()">No appointment Patients</button>
+        </div>
+    
+        <!-- Tables -->
+        <table id="firstTable" class="table table-bordered" data-toggle="table" data-pagination="true" data-page-size="10">
+            <thead style="background-color: green;">
+                <tr>
+                    <th>Name</th>
+                    <th>PhoneNumber</th>
+                    <th>DoctorChoice</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="cp : ${currentpatients}">
+                    <td th:text="${cp.name}"></td>
+                     <td th:text="${cp.phone_number}"></td>
+                     <td th:text="${cp.Doctor_choice}"></td>
+                    </tr>
+                </tbody>
+        </table>
+    
+        <table id="secondTable" class="table table-bordered" style="display:none" data-toggle="table" data-pagination="true" data-page-size="10">
+          <thead style="background-color: green; color: white;">
+            <tr>
+                <th>Name</th>
+                <th>PhoneNumber</th>
+                
+            </tr>
+            </thead>
+            <tbody>
+  
+                
+          <tr th:each="qp : ${queriedpatients}">
+               <td th:text="${qp.name}"></td>
+                     <td th:text="${qp.phone_number}"></td>
+          
+            </tr>
+            </tbody>
+            
+        </table>
+        <table id="thirdTable" class="table table-bordered" style="display:none" data-toggle="table" data-pagination="true" data-page-size="10">
+          <thead style="background-color: green; color: white;">
+            <tr>
+                <th>Name</th>
+                <th>PhoneNumber</th>
+                
+            </tr>
+            </thead>
+            <tbody>
+             <tr th:each="np : ${noappointment}">
+               <td th:text="${np.name}"></td>
+                     <td th:text="${np.phone_number}"></td>
+             </tr>
+             
+            </tbody>
+            
+        </table>
+    </div>
+    
+    <script>
+      function showFirstTable() {
+          $('#firstTable').show();
+          $('#secondTable').hide();
+          $('#thirdTable').hide();
+          // Initialize Bootstrap Table for the first table if not already initialized
+          if (!$('#firstTable').data('bootstrap.table')) {
+              $('#firstTable').bootstrapTable();
+          }
+          
+          // Destroy Bootstrap Table for the second table to prevent duplication
+          $('#secondTable').bootstrapTable('destroy');
+          $('#thirdTable').bootstrapTable('destroy');
+      }
+  
+      function showSecondTable() {
+          $('#firstTable').hide();
+          $('#thirdTable').hide();
+          $('#secondTable').show();
+  
+          // Initialize Bootstrap Table for the second table if not already initialized
+          if (!$('#secondTable').data('bootstrap.table')) {
+              $('#secondTable').bootstrapTable();
+          }
+          
+          // Destroy Bootstrap Table for the first table to prevent duplication
+          $('#firstTable').bootstrapTable('destroy');
+          $('#thirdTable').bootstrapTable('destroy');
+      }
+      function showThirdTable() {
+          $('#firstTable').hide();
+          $('#thirdTable').show();
+          $('#secondTable').hide();
+  
+          // Initialize Bootstrap Table for the second table if not already initialized
+          if (!$('#thirdTable').data('bootstrap.table')) {
+              $('#thirdTable').bootstrapTable();
+          }
+          
+          // Destroy Bootstrap Table for the first table to prevent duplication
+          $('#firstTable').bootstrapTable('destroy');
+          $('#secondTable').bootstrapTable('destroy');
+      }
+  
+      // Initialize Bootstrap Table for the first table by default
+      $(document).ready(function () {
+          showFirstTable();
+      });
+  </script>
+  
+<!-- herooo -->
+<!-- 
+<div class="hero vh-100 d-flex align-items-center" id="home">
+    <div class="row">
+
+        <div class="col-lg-7 mx-auto">
+            <h1 class="display-4 text-white">
+                Holistic Healing Center 
+            </h1>
+            
+        </div>
+    </div>
+</div>
+<section id="services">
+  <div class="container">
+    <div class="row mb-5">
+    <div class="col-md-8 mx-auto text-center">
+      <h6 class="text-primary">
+        The Menus
+      </h6>
+      <h1>Menus</h1>
+    </div>
+  </div>
+  <div class="row g-4">
+  <div class="col-lg-4 col-sm-6">
+    <div class="service card-effect">
+    <div class="iconbox ">
+      <i class='bx bxs-bar-chart-alt-2'></i>
+    </div>
+    <h5 class="mt-4 mb-2">
+      Profit analysis
+    </h5>
+    <p>Click here to check out the profit.<br>
+      loss analysis chart for your clinic .<br>
+      lorem epsilum etc etc.</p>
+  </div>
+</div>
+<div class="col-lg-4 col-sm-6">
+  <div class="service card-effect">
+  <div class="iconbox ">
+    <i class='bx bxs-dashboard'></i>
+  </div>
+  <h5 class="mt-4 mb-2">
+    Doctor Dashboard
+  </h5>
+  <p>Click here to check out doctors.<br>
+    and their patients.<br>
+    lorem epsilum etc etc.</p>
+</div>
+</div>
+<div class="col-lg-4 col-sm-6">
+  <div class="service card-effect">
+  <div class="iconbox ">
+    <i class='bx bx-plus-medical'></i>
+  </div>
+  <h5 class="mt-4 mb-2">
+    Patient tracking
+  </h5>
+  <p>Click here to check youur
+    patient's health and rating .<br>
+    lorem epsilum etc etc.</p>
+</div>
+</div>
+
+  </div>
+</div> -->
+<!-- </section> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  </body>
+</html>
